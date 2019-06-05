@@ -38,7 +38,7 @@ ROOT_URLCONF = 'YouTubePlayer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['E:\PRACTICE\YouTubePlayer\Player\\templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -8,8 +8,6 @@ from googleapiclient.discovery import build
 
 import json
 
-# project\Scripts\activate
-
 api_service_name = "youtube"
 api_version = "v3"
 scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]

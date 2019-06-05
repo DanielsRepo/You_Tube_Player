@@ -1,0 +1,27 @@
+body {
+    padding-top: 66px;
+}
+.card-text, input[type='text'] {
+    font-size: 1rem !important;
+}
+.thumb {
+    margin: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+p {
+    margin: 0 !important;
+}
+.card {
+    font-weight: 300 !important;
+}
+.btn-black, .btn-black.dropdown-toggle {
+    background-color: #2e2e2e !important;
+}
+.navbar {
+    padding: 0 !important;
+}
+.modal-footer {
+    padding: 0.5rem !important;
+}

@@ -8,7 +8,6 @@ from bootstrap_modal_forms.generic import BSModalLoginView
 
 from django import forms
 from .forms import LoginForm, RegistrationForm
-from django.contrib.auth.forms import UserCreationForm
 
 from Player.models import Video
 
@@ -16,8 +15,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
 from django.core.exceptions import ObjectDoesNotExist
-
-import json
 
 def register(request):
     if request.method == 'POST':

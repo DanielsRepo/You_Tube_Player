@@ -1,12 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-import google_auth_oauthlib.flow
-import googleapiclient.discovery
-import googleapiclient.errors
 from googleapiclient.discovery import build
-
-import json
 
 api_service_name = "youtube"
 api_version = "v3"

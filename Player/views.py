@@ -14,8 +14,6 @@ from Player.models import Video
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
-from django.core.exceptions import ObjectDoesNotExist
-
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -40,7 +38,7 @@ def like(request):
 
         try:
             video = Video.objects.get(video_id = v_id, favourite = user)
-        except ObjectDoesNotExist:
+        except Video.DoesNotExist:
             video = None
 
         if video == None:

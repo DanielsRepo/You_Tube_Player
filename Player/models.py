@@ -27,51 +27,54 @@ class Video(models.Model):
         super().save(*args, **kwargs)
 
     def get_videos(self, q, max_results=15, order="relevance"):
-        videos = Video.objects.filter(query__query = q)
-
-        if len(videos) == 0:
-            youtube = build(api_service_name, api_version, developerKey=API_KEY)
-            search_response = youtube.search().list(
-                q=q,
-                type="video",
-                order = order,
-                part="id,snippet",
-                maxResults=max_results
-            ).execute()
-
-            exist_videos = []
-            new_videos = []
-            if len(search_response.get("items", [])) > 0:
-
-                q = Query.objects.create(query = q)
-
-                for res in search_response.get("items", []):
-                    video = Video.objects.filter(video_id = res['id']['videoId']).first()
-                    
-                    if video != None:
-                        video.query.add(q)
-                        exist_videos.append(video)
-                    else:
-                        new_videos.append(Video(
-                            video_id = res['id']['videoId'],
-                            video_title = res['snippet']['title'],
-                            channel_title = res['snippet']['channelTitle'],
-                            date = res['snippet']['publishedAt'][0:10],
-                            preview = res['snippet']['thumbnails']['medium']['url']
-                        ))
-
-                Video.objects.bulk_create(new_videos)
-
-                video_ids = list(Video.objects.values_list('id', flat=True).order_by('-id'))[:15][::-1]
-                query_videos = []
-
-                for v_id in video_ids:
-                    q_v = Video.query.through(video_id = v_id, query_id = q.id)
-                    query_videos.append(q_v)
-
-                Video.query.through.objects.bulk_create(query_videos)
-
-            return exist_videos + new_videos
+        if not q.strip(): 
+            return []
         else:
-            return list(videos)
+            videos = Video.objects.filter(query__query = q)
+
+            if len(videos) == 0:
+                youtube = build(api_service_name, api_version, developerKey=API_KEY)
+                search_response = youtube.search().list(
+                    q=q,
+                    type="video",
+                    order = order,
+                    part="id,snippet",
+                    maxResults=max_results
+                ).execute()
+
+                exist_videos = []
+                new_videos = []
+                if len(search_response.get("items", [])) > 0:
+
+                    q = Query.objects.create(query = q)
+
+                    for res in search_response.get("items", []):
+                        video = Video.objects.filter(video_id = res['id']['videoId']).first()
+
+                        if video != None:
+                            video.query.add(q)
+                            exist_videos.append(video)
+                        else:
+                            new_videos.append(Video(
+                                video_id = res['id']['videoId'],
+                                video_title = res['snippet']['title'],
+                                channel_title = res['snippet']['channelTitle'],
+                                date = res['snippet']['publishedAt'][0:10],
+                                preview = res['snippet']['thumbnails']['medium']['url']
+                            ))
+
+                    Video.objects.bulk_create(new_videos)
+
+                    video_ids = list(Video.objects.values_list('id', flat=True).order_by('-id'))[:15][::-1]
+                    query_videos = []
+
+                    for v_id in video_ids:
+                        q_v = Video.query.through(video_id = v_id, query_id = q.id)
+                        query_videos.append(q_v)
+
+                    Video.query.through.objects.bulk_create(query_videos)
+
+                return exist_videos + new_videos
+            else:
+                return list(videos)
 

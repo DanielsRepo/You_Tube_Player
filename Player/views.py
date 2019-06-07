@@ -42,7 +42,7 @@ def like(request):
             video = None
 
         if video == None:
-            video = Video.objects.filter(video_id = v_id).first()
+            video = Video.objects.get(video_id = v_id)
             video.favourite.add(user)
             video.save()
         else:

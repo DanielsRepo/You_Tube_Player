@@ -32,7 +32,7 @@ class Video(models.Model):
         else:
             videos = Video.objects.filter(query__query = q)
 
-            if len(videos) == 0:
+            if videos.count() == 0:
                 youtube = build(api_service_name, api_version, developerKey=API_KEY)
                 search_response = youtube.search().list(
                     q=q,
@@ -76,5 +76,5 @@ class Video(models.Model):
 
                 return exist_videos + new_videos
             else:
-                return list(videos)
+                return videos
 

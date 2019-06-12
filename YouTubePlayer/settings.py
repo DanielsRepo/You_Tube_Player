@@ -86,3 +86,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
+
+API_SERVICE_NAME = "youtube"
+API_VERSION = "v3"
+SCOPES = ["https://www.googleapis.com/auth/youtube.force-ssl"]
+# API_KEY = "AIzaSyBa1C4HQIOAkWwGHNAmi1MVRl7jEAO0QeM"
+API_KEY = "AIzaSyCmNAzZs2ga7mUhyqvCi8dVpQJ0NCIn4Dg"

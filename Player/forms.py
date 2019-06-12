@@ -5,15 +5,17 @@ from django.core.validators import validate_email
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
+
 class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
 
+
 class RegistrationForm(forms.Form):
-    username = forms.CharField(required = True, max_length = 32)
-    email = forms.CharField(required = True, max_length = 32)
-    password = forms.CharField(required = True, max_length = 32, widget=forms.PasswordInput)
+    username = forms.CharField(required=True, max_length=32)
+    email = forms.EmailField(required=True, max_length=32)
+    password = forms.CharField(required=True, max_length=32, widget=forms.PasswordInput)
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
@@ -46,7 +48,7 @@ class RegistrationForm(forms.Form):
  
         return password
  
-    def save(self, commit=True):
+    def save(self):
         user = User.objects.create_user(
             self.cleaned_data['username'],
             self.cleaned_data['email'],

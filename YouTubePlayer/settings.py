@@ -1,12 +1,17 @@
 import os
+import environ
+
+
+env = environ.Env()
+environ.Env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'djj(f)z70n$^peo=ej6c4+ouh$4sditp8suk3f!&m!*hm6k-2g'
+SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(" ")
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -54,9 +59,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'YouTubePlayer.wsgi.application'
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
     }
 }
 
@@ -90,5 +103,4 @@ STATIC_URL = "/static/"
 API_SERVICE_NAME = "youtube"
 API_VERSION = "v3"
 SCOPES = ["https://www.googleapis.com/auth/youtube.force-ssl"]
-# API_KEY = "AIzaSyBa1C4HQIOAkWwGHNAmi1MVRl7jEAO0QeM"
-API_KEY = "AIzaSyCmNAzZs2ga7mUhyqvCi8dVpQJ0NCIn4Dg"
+API_KEY = "AIzaSyCsLab5m2QMddKI0wEa_xYQ0s4XlRzkLwU"

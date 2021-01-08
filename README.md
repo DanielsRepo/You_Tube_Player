@@ -1,9 +1,7 @@
 ﻿git clone https://github.com/DanielsRepo/You_Tube_Player.git 
- 
-project\Scripts\activate
 
-pip install -r requirements.txt
+cd You_Tube_Player
 
-python manage.py migrate
+docker-compose build
 
-python manage.py runserver
+docker-compose up

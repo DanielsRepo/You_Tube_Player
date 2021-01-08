@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  player:
+    build:
+      context: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports: 
+      - 8000:8000
+    env_file:
+      - YouTubePlayer/.env
+    volumes:
+      - .:/player
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:13
+    env_file:
+      - YouTubePlayer/.env
+    restart: always
+    

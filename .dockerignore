@@ -1,0 +1,5 @@
+.git
+venv
+Player/migrations
+Player/__pycache__
+YouTubePlayer/__pycache__
